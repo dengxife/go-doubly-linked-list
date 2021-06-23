@@ -13,13 +13,13 @@ func NewList() (list *List) {
 	return
 }
 
-// Head 返回链表的头节点
+// Head 返回链表的头节点元素
 func (l *List) Head() (head *Node) {
 	head = l.head
 	return
 }
 
-// Tail 返回链表的尾节点
+// Tail 返回链表的尾节点元素
 func (l *List) Tail() (tail *Node) {
 	tail = l.tail
 	return
@@ -31,7 +31,7 @@ func (l *List) Size() (size int64) {
 	return
 }
 
-// Append 在链表的末尾添加一个节点
+// Append 在链表的末尾添加一个节点元素
 func (l *List) Append(data interface{}) {
 	node := NewNode(data)
 
@@ -47,5 +47,22 @@ func (l *List) Append(data interface{}) {
 	}
 
 	l.size++
-	return
+}
+
+// InsertPrev 在链表的头部添加一个节点元素
+func (l *List) InsertPrev(data interface{}) {
+	node := NewNode(data)
+
+	if l.Size() == 0 {
+		l.head = node
+		l.tail = node
+	} else {
+		head := l.Head()
+		head.prev = node
+		node.next = head
+
+		l.head = node
+	}
+
+	l.size++
 }

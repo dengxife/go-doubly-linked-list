@@ -15,13 +15,13 @@ func NewNode(data interface{}) (node *Node) {
 	return
 }
 
-// Prev 返回节点的前个节点
+// Prev 返回节点的前个节点的引用
 func (n *Node) Prev() (prev *Node) {
 	prev = n.prev
 	return
 }
 
-// Next 返回节点的后个节点
+// Next 返回节点的后个节点的引用
 func (n *Node) Next() (next *Node) {
 	next = n.next
 	return
