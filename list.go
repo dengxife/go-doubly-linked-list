@@ -77,7 +77,7 @@ func (l *List) InsertPrev(data interface{}) {
 	l.size++
 }
 
-// Remove 删除任意节点
+// Remove 删除链表中的任意节点
 func (l *List) Remove(node *Node) bool {
 
 	// 如果要删除的节点为nil 或者 链表为空 直接返回 false
@@ -88,12 +88,9 @@ func (l *List) Remove(node *Node) bool {
 	currentNode := l.Head()
 
 	for {
+		if reflect.DeepEqual(node.data, currentNode.data) {
 
-		d := reflect.DeepEqual(node.data, currentNode.data)
-
-		if d {
-
-			// 是头节点
+			// 如果当前是头部节点
 			if currentNode.prev == nil {
 				currentNode.Next().prev = nil
 				l.head = currentNode.Next()
@@ -103,7 +100,7 @@ func (l *List) Remove(node *Node) bool {
 				return true
 			}
 
-			// 是尾节点
+			// 如果当前你是是尾部节点
 			if currentNode.next == nil {
 				currentNode.Prev().next = nil
 				l.tail = currentNode.Prev()
@@ -113,7 +110,7 @@ func (l *List) Remove(node *Node) bool {
 				return true
 			}
 
-			// 是中间节点
+			// 如果是中间节点
 			currentNode.Prev().next = currentNode.next
 			currentNode.Next().prev = currentNode.prev
 			currentNode.prev = nil
