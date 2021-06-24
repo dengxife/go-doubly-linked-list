@@ -1,5 +1,7 @@
 package main
 
+import "reflect"
+
 // List 链表结构体
 type List struct {
 	head *Node
@@ -31,6 +33,14 @@ func (l *List) Size() (size int64) {
 	return
 }
 
+// isEmpty 判断链表是否为空
+func (l List) isEmpty() bool {
+	if l.Size() == 0 {
+		return true
+	}
+	return false
+}
+
 // Append 在链表的末尾添加一个节点元素
 func (l *List) Append(data interface{}) {
 	node := NewNode(data)
@@ -53,7 +63,7 @@ func (l *List) Append(data interface{}) {
 func (l *List) InsertPrev(data interface{}) {
 	node := NewNode(data)
 
-	if l.Size() == 0 {
+	if l.isEmpty() {
 		l.head = node
 		l.tail = node
 	} else {
@@ -65,4 +75,57 @@ func (l *List) InsertPrev(data interface{}) {
 	}
 
 	l.size++
+}
+
+// Remove 删除任意节点
+func (l *List) Remove(node *Node) bool {
+
+	// 如果要删除的节点为nil 或者 链表为空 直接返回 false
+	if node == nil || l.isEmpty() {
+		return false
+	}
+
+	currentNode := l.Head()
+
+	for {
+
+		d := reflect.DeepEqual(node.data, currentNode.data)
+
+		if d {
+
+			// 是头节点
+			if currentNode.prev == nil {
+				currentNode.Next().prev = nil
+				l.head = currentNode.Next()
+				currentNode.next = nil
+
+				l.size--
+				return true
+			}
+
+			// 是尾节点
+			if currentNode.next == nil {
+				currentNode.Prev().next = nil
+				l.tail = currentNode.Prev()
+				currentNode.prev = nil
+
+				l.size--
+				return true
+			}
+
+			// 是中间节点
+			currentNode.Prev().next = currentNode.next
+			currentNode.Next().prev = currentNode.prev
+			currentNode.prev = nil
+			currentNode.next = nil
+
+			l.size--
+
+			return true
+		}
+
+		currentNode = currentNode.Next()
+	}
+
+	return false
 }

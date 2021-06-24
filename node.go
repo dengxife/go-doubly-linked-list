@@ -28,7 +28,7 @@ func (n *Node) Next() (next *Node) {
 }
 
 // GetNode 返回节点的值
-func (n *Node) GetNode(data interface{}) {
+func (n *Node) GetNode() (data interface{}) {
 	if n == nil {
 		return
 	}
