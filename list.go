@@ -59,8 +59,8 @@ func (l *List) Append(data interface{}) {
 	l.size++
 }
 
-// InsertPrev 在链表的头部添加一个节点元素
-func (l *List) InsertPrev(data interface{}) {
+// InsertHead 在链表的头部添加一个节点元素
+func (l *List) InsertHead(data interface{}) {
 	node := NewNode(data)
 
 	if l.isEmpty() {
@@ -117,11 +117,45 @@ func (l *List) Remove(node *Node) bool {
 			currentNode.next = nil
 
 			l.size--
-
 			return true
 		}
 
 		currentNode = currentNode.Next()
+
+		if currentNode.next == nil {
+			return false
+		}
+	}
+
+	return false
+}
+
+// InsertNext 在指定的节点node后面添加新的newNode
+func (l *List) InsertNext(node *Node, newNode *Node) bool {
+	if newNode == nil {
+		return false
+	}
+
+	currentNode := l.Head()
+
+	for {
+
+		if reflect.DeepEqual(node.data, currentNode.data) {
+			currentNode.Next().prev = newNode
+			newNode.next = currentNode.Next()
+
+			currentNode.next = newNode
+			newNode.prev = currentNode
+
+			l.size++
+			return true
+		}
+
+		currentNode = currentNode.Next()
+
+		if currentNode.next == nil {
+			return false
+		}
 	}
 
 	return false

@@ -35,3 +35,19 @@ func (n *Node) GetNode() (data interface{}) {
 	data = n.data
 	return
 }
+
+// isHead 判断当前节点是不是最后的节点
+func (n *Node) isHead() bool {
+	if n.prev != nil {
+		return false
+	}
+	return true
+}
+
+// isTail 判断当前节点是不是最后的节点
+func (n Node) isTail() bool {
+	if n.next != nil {
+		return false
+	}
+	return true
+}
